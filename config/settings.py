@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic', # to use static files
     'django.contrib.staticfiles',
     'blog',
     'accounts',
@@ -43,11 +44,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # to use static files
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -122,9 +125,10 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 
-STATIC_ROOT = BASE_DIR
+STATIC_ROOT = STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.stcaticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # to use static files
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
